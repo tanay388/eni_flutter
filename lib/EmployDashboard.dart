@@ -1,3 +1,6 @@
+import 'package:employee_management/Models/DashboardResponse.dart';
+import 'package:employee_management/api_services.dart';
+import 'package:employee_management/widget.dart';
 import 'package:flutter/material.dart';
 
 class EmployDashboard extends StatefulWidget {
@@ -9,7 +12,23 @@ class EmployDashboard extends StatefulWidget {
 }
 
 class _EmployDashboardState extends State<EmployDashboard> {
+  late DashboardResponse dashboardData;
   String _empName = "Tanay";
+  @override
+  void initState() {
+    // TODO: implement initState
+    getDashBoardData();
+    super.initState();
+  }
+
+  late List<Schedules> scheduleData = [];
+  getDashBoardData() async {
+    dashboardData = await ApiService.getDashboardData(widget.empId!);
+    print(dashboardData);
+    _empName = dashboardData.user.Name.toString();
+    scheduleData = dashboardData.schedules;
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,31 +40,31 @@ class _EmployDashboardState extends State<EmployDashboard> {
             Container(
                 width: MediaQuery.of(context).size.width,
                 alignment: Alignment.center,
-                padding:
-                    EdgeInsets.only(top: 100, bottom: 30, left: 20, right: 20),
-                decoration: BoxDecoration(
+                padding: const EdgeInsets.only(
+                    top: 100, bottom: 30, left: 20, right: 20),
+                decoration: const BoxDecoration(
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(20),
                         bottomRight: Radius.circular(20)),
                     color: Colors.redAccent),
-                child: Container(
+                child: SizedBox(
                   width: 500,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Welcome! " + _empName,
-                        style: TextStyle(
+                        "Welcome! $_empName",
+                        style: const TextStyle(
                             color: Colors.white,
                             fontSize: 22,
                             fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Text(
                         "Your Dashboard to track your work. ${widget.empId}",
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Color.fromARGB(255, 254, 253, 253),
                           fontSize: 18,
                         ),
@@ -53,23 +72,24 @@ class _EmployDashboardState extends State<EmployDashboard> {
                     ],
                   ),
                 )),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Container(
               width: 500,
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: Row(
                 children: [
                   Expanded(
                       child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 20),
                     decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 215, 239, 253),
-                        border:
-                            Border.all(color: Color.fromARGB(255, 0, 19, 128))),
+                        color: const Color.fromARGB(255, 215, 239, 253),
+                        border: Border.all(
+                            color: const Color.fromARGB(255, 0, 19, 128))),
                     child: Column(
-                      children: [
+                      children: const [
                         Icon(
                           Icons.access_time_filled_rounded,
                           size: 60,
@@ -92,18 +112,19 @@ class _EmployDashboardState extends State<EmployDashboard> {
                       ],
                     ),
                   )),
-                  SizedBox(
+                  const SizedBox(
                     width: 15,
                   ),
                   Expanded(
                       child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 20),
                     decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 215, 239, 253),
-                        border:
-                            Border.all(color: Color.fromARGB(255, 0, 19, 128))),
+                        color: const Color.fromARGB(255, 215, 239, 253),
+                        border: Border.all(
+                            color: const Color.fromARGB(255, 0, 19, 128))),
                     child: Column(
-                      children: [
+                      children: const [
                         Icon(
                           Icons.access_time_filled_rounded,
                           size: 60,
@@ -128,6 +149,19 @@ class _EmployDashboardState extends State<EmployDashboard> {
                   ))
                 ],
               ),
+            ),
+            SizedBox(
+              height: 400,
+              width: double.infinity,
+              child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: scheduleData.length,
+                  itemBuilder: (context, idx) => ListBox(
+                      enrtyTime: DateTime.parse(scheduleData[idx].Entry),
+                      exitTime: DateTime.parse(scheduleData[idx].Exit),
+                      description: scheduleData[idx].Description,
+                      name: _empName,
+                      location: scheduleData[idx].Location)),
             )
           ],
         ),
@@ -135,4 +169,3 @@ class _EmployDashboardState extends State<EmployDashboard> {
     );
   }
 }
-

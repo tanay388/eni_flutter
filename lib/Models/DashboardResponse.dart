@@ -1,34 +1,37 @@
+import 'dart:convert';
+
 class DashboardResponse {
   DashboardResponse({
     required this.user,
-    required this.TotalHoursWorked,
+    required this.totalHoursWorked,
     required this.earningMonth,
     required this.schedules,
   });
-  late final User user;
-  late final double TotalHoursWorked;
+  late final UserData user;
+  late final double totalHoursWorked;
   late final double earningMonth;
   late final List<Schedules> schedules;
 
-  DashboardResponse.fromJson(Map<String, dynamic> json){
-    user = User.fromJson(json['user']);
-    TotalHoursWorked = json['TotalHoursWorked'];
+  DashboardResponse.fromJson(Map<String, dynamic> json) {
+    user = UserData.fromJson(json['user']);
+    totalHoursWorked = json['TotalHoursWorked'];
     earningMonth = json['earningMonth'];
-    schedules = List.from(json['schedules']).map((e)=>Schedules.fromJson(e)).toList();
+    schedules =
+        List.from(json['schedules']).map((e) => Schedules.fromJson(e)).toList();
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     _data['user'] = user.toJson();
-    _data['TotalHoursWorked'] = TotalHoursWorked;
+    _data['TotalHoursWorked'] = totalHoursWorked;
     _data['earningMonth'] = earningMonth;
-    _data['schedules'] = schedules.map((e)=>e.toJson()).toList();
+    _data['schedules'] = schedules.map((e) => e.toJson()).toList();
     return _data;
   }
 }
 
-class User {
-  User({
+class UserData {
+  UserData({
     required this.Name,
     required this.Phone,
     required this.Email,
@@ -48,7 +51,7 @@ class User {
   late final bool Logged;
   late final bool Active;
 
-  User.fromJson(Map<String, dynamic> json){
+  UserData.fromJson(Map<String, dynamic> json) {
     Name = json['Name'];
     Phone = json['Phone'];
     Email = json['Email'];
@@ -91,8 +94,7 @@ class Schedules {
   late final String Location;
   late final String Description;
 
-
-  Schedules.fromJson(Map<String, dynamic> json){
+  Schedules.fromJson(Map<String, dynamic> json) {
     EmpID = json['EmpID'];
     CurrDate = json['CurrDate'];
     Entry = json['Entry'];

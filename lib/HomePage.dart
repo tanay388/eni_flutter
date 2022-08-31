@@ -9,12 +9,14 @@ import 'package:qrscan/qrscan.dart' as scanner;
 import 'package:permission_handler/permission_handler.dart';
 
 class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'avenir'),
-      home: HomePageWidget(),
+      home: const HomePageWidget(),
     );
   }
 }
@@ -33,13 +35,13 @@ class _HomePageWidgetState extends State<HomePageWidget> {
   String? _empId;
 
   void checkinApiPost(String id) async {
-    _checkInMessage = (await ApiService.postCheckIn(id));
+    _checkInMessage = await ApiService.postCheckIn(id);
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
     showCheckInSuccessDialog(context, _checkInMessage);
   }
 
   void checkoutApiPost(String id) async {
-    _checkOutMessage = (await ApiService.postCheckOut(id));
+    _checkOutMessage = await ApiService.postCheckOut(id);
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
     showCheckOutSuccessDialog(context, _checkOutMessage);
   }
@@ -84,7 +86,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
   void initState() {
     _timeString =
         "${DateTime.now().hour} : ${DateTime.now().minute} :${DateTime.now().second} {DateTime.now().}";
-    Timer.periodic(Duration(seconds: 1), (Timer t) => _getCurrentTime());
+    Timer.periodic(const Duration(seconds: 1), (Timer t) => _getCurrentTime());
     super.initState();
   }
 
@@ -97,21 +99,21 @@ class _HomePageWidgetState extends State<HomePageWidget> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
-                margin: EdgeInsets.only(top: 0),
+                margin: const EdgeInsets.only(top: 0),
                 height: 300,
                 width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage('asset/image/path2.png'),
                         fit: BoxFit.fill)),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image(
+                  children: const [
+                    const Image(
                       image: AssetImage('asset/image/logo_eni.png'),
                       width: 120,
                     ),
-                    Text(
+                    const Text(
                       "Welcome to the ENI Intelligent Solutions",
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -119,10 +121,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           fontSize: 22,
                           fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
-                    Text(
+                    const Text(
                       "Your one stop Management and Tracking app for the work.",
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -134,23 +136,23 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.all(20),
+                margin: const EdgeInsets.all(20),
                 width: 400,
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                    borderRadius: const BorderRadius.all(Radius.circular(8)),
                     color: Colors.white,
                     boxShadow: [
                       BoxShadow(
                           color: Colors.black.withOpacity(0.2),
-                          offset: Offset(0, 9),
+                          offset: const Offset(0, 9),
                           blurRadius: 20,
                           spreadRadius: 3)
                     ]),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       "Let's get to Work ✅",
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -159,14 +161,14 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      "${_timeString}",
+                      _timeString,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Color.fromARGB(255, 75, 36, 217),
                           fontSize: 24,
                           fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
                     Row(
@@ -177,19 +179,20 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             showCheckInDialog(context);
                           },
                           child: Container(
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 vertical: 10, horizontal: 30),
                             decoration: BoxDecoration(
-                                color: Color.fromARGB(255, 0, 115, 52),
+                                color: const Color.fromARGB(255, 0, 115, 52),
                                 boxShadow: [
                                   BoxShadow(
-                                      color: Color.fromARGB(255, 1, 89, 41)
-                                          .withOpacity(0.2),
-                                      offset: Offset(0, 9),
+                                      color:
+                                          const Color.fromARGB(255, 1, 89, 41)
+                                              .withOpacity(0.2),
+                                      offset: const Offset(0, 9),
                                       blurRadius: 20,
                                       spreadRadius: 2)
                                 ]),
-                            child: Text(
+                            child: const Text(
                               "Check In",
                               style: TextStyle(
                                   fontSize: 16,
@@ -198,7 +201,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 16,
                         ),
                         InkWell(
@@ -206,19 +209,20 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             showCheckOutDialog(context);
                           },
                           child: Container(
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 vertical: 10, horizontal: 30),
                             decoration: BoxDecoration(
-                                color: Color.fromARGB(255, 143, 0, 0),
+                                color: const Color.fromARGB(255, 143, 0, 0),
                                 boxShadow: [
                                   BoxShadow(
-                                      color: Color.fromARGB(255, 111, 17, 0)
-                                          .withOpacity(0.2),
-                                      offset: Offset(0, 9),
+                                      color:
+                                          const Color.fromARGB(255, 111, 17, 0)
+                                              .withOpacity(0.2),
+                                      offset: const Offset(0, 9),
                                       blurRadius: 20,
                                       spreadRadius: 2)
                                 ]),
-                            child: Text(
+                            child: const Text(
                               "Check Out",
                               style: TextStyle(
                                   fontSize: 16,
@@ -229,10 +233,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
-                    Text(
+                    const Text(
                       "QR code is needed to mark the attendence.",
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -243,12 +247,12 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
               Padding(
-                  padding: EdgeInsets.only(left: 20, right: 20),
-                  child: Container(
+                  padding: const EdgeInsets.only(left: 20, right: 20),
+                  child: SizedBox(
                     width: 500,
                     child: Row(
                       children: [
@@ -257,27 +261,28 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             onTap: () {},
                             child: Container(
                                 height: 190,
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     vertical: 20, horizontal: 20),
                                 decoration: BoxDecoration(
-                                    color: Color.fromARGB(255, 192, 222, 255),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
+                                    color: const Color.fromARGB(
+                                        255, 192, 222, 255),
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(10)),
                                     border: Border.all(
-                                        color:
-                                            Color.fromARGB(255, 86, 168, 255)),
+                                        color: const Color.fromARGB(
+                                            255, 86, 168, 255)),
                                     boxShadow: [
                                       BoxShadow(
-                                          color:
-                                              Color.fromARGB(255, 0, 166, 255)
-                                                  .withOpacity(0.2),
-                                          offset: Offset(0, 9),
+                                          color: const Color.fromARGB(
+                                                  255, 0, 166, 255)
+                                              .withOpacity(0.2),
+                                          offset: const Offset(0, 9),
                                           blurRadius: 20,
                                           spreadRadius: 2)
                                     ]),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
+                                  children: const [
                                     Image(
                                       image: AssetImage(
                                           'asset/image/icon-dashboard.png'),
@@ -305,7 +310,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 )),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         Expanded(
@@ -313,27 +318,28 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             onTap: () {},
                             child: Container(
                                 height: 190,
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     vertical: 20, horizontal: 20),
                                 decoration: BoxDecoration(
-                                    color: Color.fromARGB(255, 192, 222, 255),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
+                                    color: const Color.fromARGB(
+                                        255, 192, 222, 255),
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(10)),
                                     border: Border.all(
-                                        color:
-                                            Color.fromARGB(255, 86, 168, 255)),
+                                        color: const Color.fromARGB(
+                                            255, 86, 168, 255)),
                                     boxShadow: [
                                       BoxShadow(
-                                          color:
-                                              Color.fromARGB(255, 0, 166, 255)
-                                                  .withOpacity(0.2),
-                                          offset: Offset(0, 2),
+                                          color: const Color.fromARGB(
+                                                  255, 0, 166, 255)
+                                              .withOpacity(0.2),
+                                          offset: const Offset(0, 2),
                                           blurRadius: 3,
                                           spreadRadius: 2)
                                     ]),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
+                                  children: const [
                                     Image(
                                       image: AssetImage(
                                           'asset/image/icon-dashboard.png'),
@@ -364,7 +370,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       ],
                     ),
                   )),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               )
             ],
@@ -374,20 +380,20 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
   void _getCurrentTime() {
     setState(() {
-      _timeString = "${DateFormat('hh:mm:ss a').format(DateTime.now())}";
+      _timeString = DateFormat('hh:mm:ss a').format(DateTime.now());
     });
   }
 
   showCheckInDialog(BuildContext context) {
     // set up the buttons
     Widget cancelButton = TextButton(
-      child: Text("Cancel"),
+      child: const Text("Cancel"),
       onPressed: () {
         Navigator.of(context, rootNavigator: true).pop();
       },
     );
     Widget continueButton = TextButton(
-      child: Text("Continue"),
+      child: const Text("Continue"),
       onPressed: () {
         _qrScannerCheckIn();
         // Navigator.push(context,
@@ -404,10 +410,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
             size: 70,
             color: Colors.greenAccent.shade700,
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
-          Text(
+          const Text(
             "You will be Checked In to the office. Please keep your QR code ready to scan.",
             textAlign: TextAlign.justify,
             style: TextStyle(
@@ -432,13 +438,13 @@ class _HomePageWidgetState extends State<HomePageWidget> {
   showCheckOutDialog(BuildContext context) {
     // set up the buttons
     Widget cancelButton = TextButton(
-      child: Text("Cancel"),
+      child: const Text("Cancel"),
       onPressed: () {
         Navigator.of(context, rootNavigator: true).pop();
       },
     );
     Widget continueButton = TextButton(
-      child: Text("Continue"),
+      child: const Text("Continue"),
       onPressed: () {
         _qrScannerCheckOut();
         // Navigator.push(context,
@@ -449,7 +455,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     AlertDialog alert = AlertDialog(
       content: Column(
         mainAxisSize: MainAxisSize.min,
-        children: [
+        children: const [
           Icon(
             Icons.punch_clock_rounded,
             size: 70,
@@ -482,17 +488,15 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
   showCheckInSuccessDialog(BuildContext context, String? Message) {
     // set up the buttons
-    if (Message == null) {
-      Message = "Failed";
-    }
+    Message ??= "Failed";
     Widget cancelButton = TextButton(
-      child: Text("Done"),
+      child: const Text("Done"),
       onPressed: () {
         Navigator.of(context, rootNavigator: true).pop();
       },
     );
     Widget continueButton = TextButton(
-      child: Text("Dashboard"),
+      child: const Text("Dashboard"),
       onPressed: () {
         Navigator.push(
             context,
@@ -512,13 +516,13 @@ class _HomePageWidgetState extends State<HomePageWidget> {
             size: 70,
             color: Colors.greenAccent.shade700,
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Text(
             Message,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 18,
             ),
           )
@@ -539,17 +543,15 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
   showCheckOutSuccessDialog(BuildContext context, String? Message) {
     // set up the buttons
-    if (Message == null) {
-      Message = "Failed";
-    }
+    Message ??= "Failed";
     Widget cancelButton = TextButton(
-      child: Text("Done"),
+      child: const Text("Done"),
       onPressed: () {
         Navigator.of(context, rootNavigator: true).pop();
       },
     );
     Widget continueButton = TextButton(
-      child: Text("Dashboard"),
+      child: const Text("Dashboard"),
       onPressed: () {
         Navigator.push(
             context,
@@ -564,18 +566,18 @@ class _HomePageWidgetState extends State<HomePageWidget> {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
+          const Icon(
             Icons.outbox_sharp,
             size: 70,
             color: Color.fromARGB(255, 255, 255, 6),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Text(
             Message,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 18,
             ),
           )

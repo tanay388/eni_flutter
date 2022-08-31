@@ -11,21 +11,21 @@ class OnBoarding extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'avenir',
       ),
-      home: onBoarding(),
+      home: const OnBoard(),
     );
   }
 }
 
-class onBoarding extends StatefulWidget {
-  const onBoarding({Key? key}) : super(key: key);
+class OnBoard extends StatefulWidget {
+  const OnBoard({Key? key}) : super(key: key);
 
   @override
-  State<onBoarding> createState() => _onBoardingState();
+  State<OnBoard> createState() => _OnBoardState();
 }
 
-class _onBoardingState extends State<onBoarding> {
+class _OnBoardState extends State<OnBoard> {
   int currentPage = 0;
-  PageController _pageController = new PageController(
+  final PageController _pageController = PageController(
     initialPage: 0,
     keepPage: true,
   );
@@ -37,7 +37,7 @@ class _onBoardingState extends State<onBoarding> {
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Container(
+              SizedBox(
                 height: MediaQuery.of(context).size.height * 0.6,
                 child: PageView(
                   controller: _pageController,
@@ -63,10 +63,10 @@ class _onBoardingState extends State<onBoarding> {
             left: 0,
             right: 0,
             child: Container(
-              margin: EdgeInsets.only(top: 20),
+              margin: const EdgeInsets.only(top: 20),
               height: 300,
               width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   image: DecorationImage(
                       image: AssetImage('asset/image/path1.png'),
                       fit: BoxFit.fill)),
@@ -76,26 +76,26 @@ class _onBoardingState extends State<onBoarding> {
                   InkWell(
                     onTap: openLoginPage,
                     child: Container(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 20, horizontal: 100),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 20, horizontal: 100),
                       decoration:
                           BoxDecoration(color: Colors.white, boxShadow: [
                         BoxShadow(
                             color: Colors.black.withOpacity(0.2),
-                            offset: Offset(0, 9),
+                            offset: const Offset(0, 9),
                             blurRadius: 20,
                             spreadRadius: 3)
                       ]),
-                      child: Text(
+                      child: const Text(
                         "Get Started",
                         style: TextStyle(fontSize: 16),
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
-                  Text(
+                  const Text(
                     "Login",
                     style: TextStyle(
                         color: Colors.white,
@@ -113,12 +113,12 @@ class _onBoardingState extends State<onBoarding> {
 
   AnimatedContainer getIndicator(int pageNo) {
     return AnimatedContainer(
-      duration: Duration(milliseconds: 100),
+      duration: const Duration(milliseconds: 100),
       height: 10,
       width: (currentPage == pageNo) ? 20 : 10,
-      margin: EdgeInsets.symmetric(horizontal: 5),
+      margin: const EdgeInsets.symmetric(horizontal: 5),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(5)),
+        borderRadius: const BorderRadius.all(Radius.circular(5)),
         color: (currentPage == pageNo) ? Colors.black : Colors.grey,
       ),
     );
@@ -128,35 +128,35 @@ class _onBoardingState extends State<onBoarding> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
         Container(
           height: 200,
           width: MediaQuery.of(context).size.width,
-          padding: EdgeInsets.all(50),
+          padding: const EdgeInsets.all(50),
           decoration: BoxDecoration(
               image:
                   DecorationImage(image: AssetImage('asset/image/$img.png'))),
         ),
-        SizedBox(
+        const SizedBox(
           height: 50,
         ),
         Container(
-          padding: EdgeInsets.symmetric(vertical: 10),
+          padding: const EdgeInsets.symmetric(vertical: 10),
           child: Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 30,
               fontWeight: FontWeight.w500,
             ),
           ),
         ),
         Container(
-          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 40),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
           child: Text(
             subTitle,
-            style: TextStyle(fontSize: 18, color: Colors.grey),
+            style: const TextStyle(fontSize: 18, color: Colors.grey),
             textAlign: TextAlign.center,
           ),
         )
@@ -171,6 +171,6 @@ class _onBoardingState extends State<onBoarding> {
 
   openLoginPage() {
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => HomePage()));
+        context, MaterialPageRoute(builder: (context) => const HomePage()));
   }
 }
