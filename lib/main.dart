@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:io';
-
+import 'package:employee_management/EmployDashboard.dart';
 import 'package:flutter/material.dart';
 import 'OnBoarding.dart';
 
@@ -28,12 +28,14 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(fontFamily: 'avenir'),
-      home: MyHomePage(),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key? key}) : super(key: key);
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -42,8 +44,15 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     // TODO: implement initState
-    Timer(Duration(seconds: 3), openOnBoard);
+    Timer(const Duration(seconds: 3), () => openOnBoard());
+
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
   }
 
   @override
@@ -52,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Container(
           width: 200,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               image: DecorationImage(
             image: AssetImage('asset/image/logo_eni.png'),
           )),
@@ -63,6 +72,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void openOnBoard() {
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => OnBoarding()));
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                const EmployDashboard(empId: '62f4a7f04ae0b22db511fdad')));
   }
 }
