@@ -59,11 +59,7 @@ class ApiService {
       if (response.statusCode == 200) {
         return DashboardResponse.fromJson(data);
       } else {
-        return DashboardResponse(
-            user: data['user'],
-            totalHoursWorked: data['TotalHoursWorked'],
-            earningMonth: data['earningMonth'],
-            schedules: data['schedules']);
+        throw Exception("Error");
       }
     } catch (e) {
       log(e.toString());

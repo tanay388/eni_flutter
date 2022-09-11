@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:employee_management/EmployDashboard.dart';
+import 'package:employee_management/HomePage.dart';
 import 'package:flutter/material.dart';
 import 'OnBoarding.dart';
 
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'ENI SOLUTIONS',
       theme: ThemeData(fontFamily: 'avenir'),
       home: const MyHomePage(),
     );
@@ -72,9 +73,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void openOnBoard() {
     Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-                const EmployDashboard(empId: '62f4a7f04ae0b22db511fdad')));
+        context, MaterialPageRoute(builder: (context) => const HomePage()));
   }
 }

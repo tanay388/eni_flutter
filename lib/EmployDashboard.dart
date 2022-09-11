@@ -1,3 +1,4 @@
+import 'package:employee_management/HomePage.dart';
 import 'package:employee_management/Models/DashboardResponse.dart';
 import 'package:employee_management/api_services.dart';
 import 'package:employee_management/widget.dart';
@@ -13,7 +14,10 @@ class EmployDashboard extends StatefulWidget {
 
 class _EmployDashboardState extends State<EmployDashboard> {
   late DashboardResponse dashboardData;
-  String _empName = "Tanay";
+  String _empName = "Loading....";
+  String _empDesignation = "Loading....";
+  double _empMonthlyWork = 0.0;
+  double _empMonthlyEarning = 0.0;
   @override
   void initState() {
     // TODO: implement initState
@@ -25,8 +29,12 @@ class _EmployDashboardState extends State<EmployDashboard> {
   getDashBoardData() async {
     dashboardData = await ApiService.getDashboardData(widget.empId!);
     print(dashboardData);
-    _empName = dashboardData.user.Name.toString();
-    scheduleData = dashboardData.schedules;
+    if (dashboardData.user?.name != null) {
+      _empName = dashboardData.user!.name.toString();
+    }
+    _empMonthlyEarning = dashboardData.earningMonth!;
+    _empMonthlyWork = dashboardData.totalHoursWorked!;
+    scheduleData = dashboardData.schedules!;
     setState(() {});
   }
 
@@ -41,7 +49,7 @@ class _EmployDashboardState extends State<EmployDashboard> {
                 width: MediaQuery.of(context).size.width,
                 alignment: Alignment.center,
                 padding: const EdgeInsets.only(
-                    top: 100, bottom: 30, left: 20, right: 20),
+                    top: 40, bottom: 30, left: 20, right: 20),
                 decoration: const BoxDecoration(
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(20),
@@ -51,7 +59,30 @@ class _EmployDashboardState extends State<EmployDashboard> {
                   width: 500,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HomePage()));
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Color.fromARGB(72, 255, 255, 255)),
+                          child: const Icon(
+                            Icons.arrow_back,
+                            size: 35,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 40,
+                      ),
                       Text(
                         "Welcome! $_empName",
                         style: const TextStyle(
@@ -62,9 +93,9 @@ class _EmployDashboardState extends State<EmployDashboard> {
                       const SizedBox(
                         height: 10,
                       ),
-                      Text(
-                        "Your Dashboard to track your work. ${widget.empId}",
-                        style: const TextStyle(
+                      const Text(
+                        "Your Dashboard to track your work.",
+                        style: TextStyle(
                           color: Color.fromARGB(255, 254, 253, 253),
                           fontSize: 18,
                         ),
@@ -89,21 +120,21 @@ class _EmployDashboardState extends State<EmployDashboard> {
                         border: Border.all(
                             color: const Color.fromARGB(255, 0, 19, 128))),
                     child: Column(
-                      children: const [
-                        Icon(
+                      children: [
+                        const Icon(
                           Icons.access_time_filled_rounded,
-                          size: 60,
+                          size: 40,
                           color: Color.fromARGB(255, 0, 19, 128),
                         ),
-                        Text(
-                          "Total Work this month:",
+                        const Text(
+                          "Monthly Work Hours:",
                           style: TextStyle(
                             color: Color.fromARGB(255, 0, 0, 0),
                             fontSize: 14,
                           ),
                         ),
                         Text(
-                          "30.45 Hrs",
+                          _empMonthlyWork.toStringAsFixed(3),
                           style: TextStyle(
                               color: Color.fromARGB(255, 0, 19, 128),
                               fontSize: 18,
@@ -124,21 +155,21 @@ class _EmployDashboardState extends State<EmployDashboard> {
                         border: Border.all(
                             color: const Color.fromARGB(255, 0, 19, 128))),
                     child: Column(
-                      children: const [
+                      children: [
                         Icon(
-                          Icons.access_time_filled_rounded,
-                          size: 60,
+                          Icons.monetization_on,
+                          size: 40,
                           color: Color.fromARGB(255, 0, 19, 128),
                         ),
                         Text(
-                          "Total earning this month:",
+                          "Monthly earning:",
                           style: TextStyle(
                             color: Color.fromARGB(255, 0, 0, 0),
                             fontSize: 14,
                           ),
                         ),
                         Text(
-                          "\$ 3045",
+                          _empMonthlyEarning.toStringAsFixed(3),
                           style: TextStyle(
                               color: Color.fromARGB(255, 0, 19, 128),
                               fontSize: 18,
@@ -151,17 +182,34 @@ class _EmployDashboardState extends State<EmployDashboard> {
               ),
             ),
             SizedBox(
-              height: 400,
+              height: 10,
+            ),
+            Text(
+              "Your Schedules",
+              textAlign: TextAlign.start,
+              style: TextStyle(
+                  color: Color.fromARGB(255, 0, 19, 128),
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            SizedBox(
+              height: 380,
               width: double.infinity,
               child: ListView.builder(
-                  shrinkWrap: true,
+                  shrinkWrap: false,
+                  physics: BouncingScrollPhysics(),
                   itemCount: scheduleData.length,
                   itemBuilder: (context, idx) => ListBox(
-                      enrtyTime: DateTime.parse(scheduleData[idx].Entry),
-                      exitTime: DateTime.parse(scheduleData[idx].Exit),
-                      description: scheduleData[idx].Description,
+                      enrtyTime:
+                          DateTime.parse(scheduleData[idx].entry.toString()),
+                      exitTime:
+                          DateTime.parse(scheduleData[idx].exit.toString()),
+                      description: scheduleData[idx].description,
                       name: _empName,
-                      location: scheduleData[idx].Location)),
+                      location: scheduleData[idx].location)),
             )
           ],
         ),

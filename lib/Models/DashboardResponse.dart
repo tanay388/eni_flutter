@@ -1,116 +1,132 @@
-import 'dart:convert';
-
 class DashboardResponse {
-  DashboardResponse({
-    required this.user,
-    required this.totalHoursWorked,
-    required this.earningMonth,
-    required this.schedules,
-  });
-  late final UserData user;
-  late final double totalHoursWorked;
-  late final double earningMonth;
-  late final List<Schedules> schedules;
+  User? user;
+  double? totalHoursWorked;
+  double? earningMonth;
+  List<Schedules>? schedules;
+
+  DashboardResponse(
+      {this.user, this.totalHoursWorked, this.earningMonth, this.schedules});
 
   DashboardResponse.fromJson(Map<String, dynamic> json) {
-    user = UserData.fromJson(json['user']);
-    totalHoursWorked = json['TotalHoursWorked'];
-    earningMonth = json['earningMonth'];
-    schedules =
-        List.from(json['schedules']).map((e) => Schedules.fromJson(e)).toList();
+    user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    totalHoursWorked = (json['TotalHoursWorked'] * 1.0);
+    earningMonth = (json['earningMonth'] * 1.0);
+    if (json['schedules'] != null) {
+      schedules = <Schedules>[];
+      json['schedules'].forEach((v) {
+        schedules!.add(new Schedules.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['user'] = user.toJson();
-    _data['TotalHoursWorked'] = totalHoursWorked;
-    _data['earningMonth'] = earningMonth;
-    _data['schedules'] = schedules.map((e) => e.toJson()).toList();
-    return _data;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.user != null) {
+      data['user'] = this.user!.toJson();
+    }
+    data['TotalHoursWorked'] = this.totalHoursWorked;
+    data['earningMonth'] = this.earningMonth;
+    if (this.schedules != null) {
+      data['schedules'] = this.schedules!.map((v) => v.toJson()).toList();
+    }
+    return data;
   }
 }
 
-class UserData {
-  UserData({
-    required this.Name,
-    required this.Phone,
-    required this.Email,
-    required this.Address,
-    required this.ChargePH,
-    required this.Designation,
-    required this.Logged,
-    required this.Active,
-  });
+class User {
+  String? sId;
+  String? name;
+  String? phone;
+  String? email;
+  String? address;
+  double? chargePH;
+  String? designation;
+  bool? logged;
+  bool? active;
+  int? iV;
 
-  late final String Name;
-  late final String Phone;
-  late final String Email;
-  late final String Address;
-  late final int ChargePH;
-  late final String Designation;
-  late final bool Logged;
-  late final bool Active;
+  User(
+      {this.sId,
+      this.name,
+      this.phone,
+      this.email,
+      this.address,
+      this.chargePH,
+      this.designation,
+      this.logged,
+      this.active,
+      this.iV});
 
-  UserData.fromJson(Map<String, dynamic> json) {
-    Name = json['Name'];
-    Phone = json['Phone'];
-    Email = json['Email'];
-    Address = json['Address'];
-    ChargePH = json['ChargePH'];
-    Designation = json['Designation'];
-    Logged = json['Logged'];
-    Active = json['Active'];
+  User.fromJson(Map<String, dynamic> json) {
+    sId = json['_id'];
+    name = json['Name'];
+    phone = json['Phone'];
+    email = json['Email'];
+    address = json['Address'];
+    chargePH = (json['ChargePH'] * 1.0);
+    designation = json['Designation'];
+    logged = json['Logged'];
+    active = json['Active'];
+    iV = json['__v'];
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['Name'] = Name;
-    _data['Phone'] = Phone;
-    _data['Email'] = Email;
-    _data['Address'] = Address;
-    _data['ChargePH'] = ChargePH;
-    _data['Designation'] = Designation;
-    _data['Logged'] = Logged;
-    _data['Active'] = Active;
-
-    return _data;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['_id'] = this.sId;
+    data['Name'] = this.name;
+    data['Phone'] = this.phone;
+    data['Email'] = this.email;
+    data['Address'] = this.address;
+    data['ChargePH'] = this.chargePH;
+    data['Designation'] = this.designation;
+    data['Logged'] = this.logged;
+    data['Active'] = this.active;
+    data['__v'] = this.iV;
+    return data;
   }
 }
 
 class Schedules {
-  Schedules({
-    required this.EmpID,
-    required this.CurrDate,
-    required this.Entry,
-    required this.Exit,
-    required this.Location,
-    required this.Description,
-  });
+  String? sId;
+  List<String>? empID;
+  String? currDate;
+  String? entry;
+  String? exit;
+  String? location;
+  String? description;
+  int? iV;
 
-  late final String EmpID;
-  late final String CurrDate;
-  late final String Entry;
-  late final String Exit;
-  late final String Location;
-  late final String Description;
+  Schedules(
+      {this.sId,
+      this.empID,
+      this.currDate,
+      this.entry,
+      this.exit,
+      this.location,
+      this.description,
+      this.iV});
 
   Schedules.fromJson(Map<String, dynamic> json) {
-    EmpID = json['EmpID'];
-    CurrDate = json['CurrDate'];
-    Entry = json['Entry'];
-    Exit = json['Exit'];
-    Location = json['Location'];
-    Description = json['Description'];
+    sId = json['_id'];
+    empID = json['EmpID'].cast<String>();
+    currDate = json['CurrDate'];
+    entry = json['Entry'];
+    exit = json['Exit'];
+    location = json['Location'];
+    description = json['Description'];
+    iV = json['__v'];
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['EmpID'] = EmpID;
-    _data['CurrDate'] = CurrDate;
-    _data['Entry'] = Entry;
-    _data['Exit'] = Exit;
-    _data['Location'] = Location;
-    _data['Description'] = Description;
-    return _data;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['_id'] = this.sId;
+    data['EmpID'] = this.empID;
+    data['CurrDate'] = this.currDate;
+    data['Entry'] = this.entry;
+    data['Exit'] = this.exit;
+    data['Location'] = this.location;
+    data['Description'] = this.description;
+    data['__v'] = this.iV;
+    return data;
   }
 }

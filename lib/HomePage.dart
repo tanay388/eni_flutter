@@ -82,10 +82,26 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     }
   }
 
+  Future _qrScannerDashboard() async {
+    var cameraStatus = await Permission.camera.status;
+
+    if (cameraStatus.isGranted) {
+      String? qrData = await scanner.scan();
+      _empId = qrData;
+    } else {
+      var isGrant = await Permission.camera.request();
+
+      if (isGrant.isGranted) {
+        String? qrData = await scanner.scan();
+        _empId = qrData;
+      }
+    }
+    setState(() {});
+  }
+
   @override
   void initState() {
-    _timeString =
-        "${DateTime.now().hour} : ${DateTime.now().minute} :${DateTime.now().second} {DateTime.now().}";
+    _timeString = "HH:MM:SS";
     Timer.periodic(const Duration(seconds: 1), (Timer t) => _getCurrentTime());
     super.initState();
   }
@@ -258,9 +274,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       children: [
                         Expanded(
                           child: InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              showDashboardDialog(context);
+                            },
                             child: Container(
-                                height: 190,
+                                height: 150,
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 20, horizontal: 20),
                                 decoration: BoxDecoration(
@@ -283,11 +301,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: const [
-                                    Image(
-                                      image: AssetImage(
-                                          'asset/image/icon-dashboard.png'),
-                                      width: 50,
-                                    ),
+                                    Icon(Icons.dashboard,
+                                        color:
+                                            Color.fromARGB(255, 38, 88, 255)),
                                     SizedBox(
                                       height: 20,
                                     ),
@@ -317,7 +333,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           child: InkWell(
                             onTap: () {},
                             child: Container(
-                                height: 190,
+                                height: 150,
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 20, horizontal: 20),
                                 decoration: BoxDecoration(
@@ -340,10 +356,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: const [
-                                    Image(
-                                      image: AssetImage(
-                                          'asset/image/icon-dashboard.png'),
-                                      width: 50,
+                                    Icon(
+                                      Icons.contact_mail,
+                                      color: Color.fromARGB(255, 38, 88, 255),
                                     ),
                                     SizedBox(
                                       height: 20,
@@ -459,13 +474,69 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           Icon(
             Icons.punch_clock_rounded,
             size: 70,
-            color: Color.fromARGB(255, 255, 255, 6),
+            color: Color.fromARGB(255, 113, 72, 0),
           ),
           SizedBox(
             height: 20,
           ),
           Text(
             "You will be Checked Out of the office. Please keep your QR code ready to scan.",
+            textAlign: TextAlign.justify,
+            style: TextStyle(
+              fontSize: 18,
+            ),
+          )
+        ],
+      ),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    ); // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  showDashboardDialog(BuildContext context) {
+    // set up the buttons
+    Widget cancelButton = TextButton(
+      child: const Text("Cancel"),
+      onPressed: () {
+        Navigator.of(context, rootNavigator: true).pop();
+      },
+    );
+    Widget continueButton = TextButton(
+      child: const Text("Continue"),
+      onPressed: () async {
+        await _qrScannerDashboard();
+
+        Navigator.of(context, rootNavigator: true).pop();
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => EmployDashboard(
+                      empId: _empId,
+                    )));
+      },
+    ); // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            Icons.punch_clock_rounded,
+            size: 70,
+            color: Colors.redAccent,
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          const Text(
+            "You will be diverted to your dashboard. Please keep your QR code ready to scan.",
             textAlign: TextAlign.justify,
             style: TextStyle(
               fontSize: 18,
@@ -569,7 +640,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           const Icon(
             Icons.outbox_sharp,
             size: 70,
-            color: Color.fromARGB(255, 255, 255, 6),
+            color: Color.fromARGB(255, 113, 72, 0),
           ),
           const SizedBox(
             height: 20,
@@ -594,5 +665,17 @@ class _HomePageWidgetState extends State<HomePageWidget> {
         return alert;
       },
     );
+  }
+
+  goToDashboard(String? value) {
+    if (value != null) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => EmployDashboard(
+                    empId: value,
+                  )));
+      Navigator.of(context, rootNavigator: true).pop();
+    }
   }
 }
