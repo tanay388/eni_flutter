@@ -52,8 +52,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
     if (cameraStatus.isGranted) {
       // String? qrData = await scanner.scan();
-      String? qrData = await FlutterBarcodeScanner.scanBarcode(
-          '#ff6666', 'Cancel', true, ScanMode.QR);
+      String? qrData =
+          await FlutterBarcodeScanner.scanBarcode('#ff6666', 'Cancel', true, ScanMode.QR);
 
       _empId = qrData;
       if (qrData != null) checkinApiPost(qrData);
@@ -76,8 +76,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
     if (cameraStatus.isGranted) {
       // String? qrData = await scanner.scan();
-      String? qrData = await FlutterBarcodeScanner.scanBarcode(
-          '#ff6666', 'Cancel', true, ScanMode.QR);
+      String? qrData =
+          await FlutterBarcodeScanner.scanBarcode('#ff6666', 'Cancel', true, ScanMode.QR);
       _empId = qrData;
       if (qrData != null) checkoutApiPost(qrData);
     } else {
@@ -98,8 +98,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
     if (cameraStatus.isGranted) {
       // String? qrData = await scanner.scan();
-      String? qrData = await FlutterBarcodeScanner.scanBarcode(
-          '#ff6666', 'Cancel', true, ScanMode.QR);
+      String? qrData =
+          await FlutterBarcodeScanner.scanBarcode('#ff6666', 'Cancel', true, ScanMode.QR);
       _empId = qrData;
     } else {
       var isGrant = await Permission.camera.request();
@@ -135,8 +135,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 width: MediaQuery.of(context).size.width,
                 decoration: const BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage('asset/image/path2.png'),
-                        fit: BoxFit.fill)),
+                        image: AssetImage('asset/image/path2.png'), fit: BoxFit.fill)),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: const [
@@ -148,9 +147,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       "Welcome to the ENI Intelligent Solutions",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold),
+                          color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(
                       height: 10,
@@ -210,15 +207,14 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             showCheckInDialog(context);
                           },
                           child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 30),
+                            padding:
+                                const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
                             decoration: BoxDecoration(
                                 color: const Color.fromARGB(255, 0, 115, 52),
                                 boxShadow: [
                                   BoxShadow(
-                                      color:
-                                          const Color.fromARGB(255, 1, 89, 41)
-                                              .withOpacity(0.2),
+                                      color: const Color.fromARGB(255, 1, 89, 41)
+                                          .withOpacity(0.2),
                                       offset: const Offset(0, 9),
                                       blurRadius: 20,
                                       spreadRadius: 2)
@@ -240,15 +236,14 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             showCheckOutDialog(context);
                           },
                           child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 30),
+                            padding:
+                                const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
                             decoration: BoxDecoration(
                                 color: const Color.fromARGB(255, 143, 0, 0),
                                 boxShadow: [
                                   BoxShadow(
-                                      color:
-                                          const Color.fromARGB(255, 111, 17, 0)
-                                              .withOpacity(0.2),
+                                      color: const Color.fromARGB(255, 111, 17, 0)
+                                          .withOpacity(0.2),
                                       offset: const Offset(0, 9),
                                       blurRadius: 20,
                                       spreadRadius: 2)
@@ -297,17 +292,14 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 20, horizontal: 20),
                                 decoration: BoxDecoration(
-                                    color: const Color.fromARGB(
-                                        255, 192, 222, 255),
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(10)),
+                                    color: const Color.fromARGB(255, 192, 222, 255),
+                                    borderRadius:
+                                        const BorderRadius.all(Radius.circular(10)),
                                     border: Border.all(
-                                        color: const Color.fromARGB(
-                                            255, 86, 168, 255)),
+                                        color: const Color.fromARGB(255, 86, 168, 255)),
                                     boxShadow: [
                                       BoxShadow(
-                                          color: const Color.fromARGB(
-                                                  255, 0, 166, 255)
+                                          color: const Color.fromARGB(255, 0, 166, 255)
                                               .withOpacity(0.2),
                                           offset: const Offset(0, 9),
                                           blurRadius: 20,
@@ -317,8 +309,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: const [
                                     Icon(Icons.dashboard,
-                                        color:
-                                            Color.fromARGB(255, 38, 88, 255)),
+                                        color: Color.fromARGB(255, 38, 88, 255)),
                                     SizedBox(
                                       height: 20,
                                     ),
@@ -327,15 +318,13 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       style: TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,
-                                          color:
-                                              Color.fromARGB(255, 38, 88, 255)),
+                                          color: Color.fromARGB(255, 38, 88, 255)),
                                     ),
                                     Text(
                                       "View and manage all your statistics.",
                                       style: TextStyle(
                                           fontSize: 14,
-                                          color:
-                                              Color.fromARGB(255, 57, 69, 74)),
+                                          color: Color.fromARGB(255, 57, 69, 74)),
                                     ),
                                   ],
                                 )),
@@ -352,17 +341,14 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 20, horizontal: 20),
                                 decoration: BoxDecoration(
-                                    color: const Color.fromARGB(
-                                        255, 192, 222, 255),
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(10)),
+                                    color: const Color.fromARGB(255, 192, 222, 255),
+                                    borderRadius:
+                                        const BorderRadius.all(Radius.circular(10)),
                                     border: Border.all(
-                                        color: const Color.fromARGB(
-                                            255, 86, 168, 255)),
+                                        color: const Color.fromARGB(255, 86, 168, 255)),
                                     boxShadow: [
                                       BoxShadow(
-                                          color: const Color.fromARGB(
-                                                  255, 0, 166, 255)
+                                          color: const Color.fromARGB(255, 0, 166, 255)
                                               .withOpacity(0.2),
                                           offset: const Offset(0, 2),
                                           blurRadius: 3,
@@ -383,15 +369,13 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       style: TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,
-                                          color:
-                                              Color.fromARGB(255, 38, 88, 255)),
+                                          color: Color.fromARGB(255, 38, 88, 255)),
                                     ),
                                     Text(
                                       "Facing problem? Reach Us.",
                                       style: TextStyle(
                                           fontSize: 14,
-                                          color:
-                                              Color.fromARGB(255, 57, 69, 74)),
+                                          color: Color.fromARGB(255, 57, 69, 74)),
                                     ),
                                   ],
                                 )),
