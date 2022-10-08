@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:employee_management/EmployDashboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:intl/intl.dart';
 import 'api_services.dart';
 
@@ -50,14 +51,20 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     var cameraStatus = await Permission.camera.status;
 
     if (cameraStatus.isGranted) {
-      String? qrData = await scanner.scan();
+      // String? qrData = await scanner.scan();
+      String? qrData = await FlutterBarcodeScanner.scanBarcode(
+          '#ff6666', 'Cancel', true, ScanMode.QR);
+
       _empId = qrData;
       if (qrData != null) checkinApiPost(qrData);
     } else {
       var isGrant = await Permission.camera.request();
 
       if (isGrant.isGranted) {
-        String? qrData = await scanner.scan();
+        // String? qrData = await scanner.scan();
+        String? qrData = await FlutterBarcodeScanner.scanBarcode(
+            '#ff6666', 'Cancel', true, ScanMode.QR);
+
         _empId = qrData;
         if (qrData != null) checkinApiPost(qrData);
       }
@@ -68,14 +75,18 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     var cameraStatus = await Permission.camera.status;
 
     if (cameraStatus.isGranted) {
-      String? qrData = await scanner.scan();
+      // String? qrData = await scanner.scan();
+      String? qrData = await FlutterBarcodeScanner.scanBarcode(
+          '#ff6666', 'Cancel', true, ScanMode.QR);
       _empId = qrData;
       if (qrData != null) checkoutApiPost(qrData);
     } else {
       var isGrant = await Permission.camera.request();
 
       if (isGrant.isGranted) {
-        String? qrData = await scanner.scan();
+        // String? qrData = await scanner.scan();
+        String? qrData = await FlutterBarcodeScanner.scanBarcode(
+            '#ff6666', 'Cancel', true, ScanMode.QR);
         _empId = qrData;
         if (qrData != null) checkoutApiPost(qrData);
       }
@@ -86,13 +97,17 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     var cameraStatus = await Permission.camera.status;
 
     if (cameraStatus.isGranted) {
-      String? qrData = await scanner.scan();
+      // String? qrData = await scanner.scan();
+      String? qrData = await FlutterBarcodeScanner.scanBarcode(
+          '#ff6666', 'Cancel', true, ScanMode.QR);
       _empId = qrData;
     } else {
       var isGrant = await Permission.camera.request();
 
       if (isGrant.isGranted) {
-        String? qrData = await scanner.scan();
+        // String? qrData = await scanner.scan();
+        String? qrData = await FlutterBarcodeScanner.scanBarcode(
+            '#ff6666', 'Cancel', true, ScanMode.QR);
         _empId = qrData;
       }
     }
@@ -515,6 +530,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
         await _qrScannerDashboard();
 
         Navigator.of(context, rootNavigator: true).pop();
+
+        // if(_empId.length() >5)
         Navigator.push(
             context,
             MaterialPageRoute(
