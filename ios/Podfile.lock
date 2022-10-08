@@ -23,6 +23,6 @@ SPEC CHECKSUMS:
   flutter_barcode_scanner: 7a1144744c28dc0c57a8de7218ffe5ec59a9e4bf
   permission_handler_apple: 44366e37eaf29454a1e7b1b7d736c2cceaeb17ce
 
-PODFILE CHECKSUM: fcf3c7cfd343772332c2d446f6b9b471fd6121c1
+PODFILE CHECKSUM: 64d59efd28fef80a72622872cbf8cefd5c985662
 
 COCOAPODS: 1.11.2
